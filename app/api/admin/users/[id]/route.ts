@@ -1,12 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { cookies } from "next/headers";
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const cookieStore = await cookies();
     const adminCookie = cookieStore.get("web3_admin_auth");
     const adminHeader = request.headers.get("x-admin-auth");
@@ -25,7 +26,7 @@ export async function PATCH(
     }
 
     const { email, password, user_metadata } = await request.json();
-    if (!params.id) {
+    if (!id) {
       return NextResponse.json({ error: "User id is required." }, { status: 400 });
     }
 
@@ -34,7 +35,7 @@ export async function PATCH(
     });
 
     const { data, error } = await supabase.auth.admin.updateUserById(
-      params.id,
+      id,
       {
         email,
         password,
