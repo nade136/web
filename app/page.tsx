@@ -1,3 +1,4 @@
+import Link from "next/link";
 import LivePricesSection from "./components/LivePricesSection";
 import StartJourneySection from "./components/StartJourneySection";
 import Footer from "./components/Footer";
@@ -39,9 +40,12 @@ export default function Home() {
           </p>
           <div className="relative z-10 mt-14 flex items-center justify-center">
             <div className="flex flex-wrap items-center justify-center gap-8">
-              <button className="rounded-lg bg-cyan-400 px-6 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_0_18px_rgba(34,211,238,0.45)]">
+              <Link
+                href="/signin"
+                className="rounded-lg bg-cyan-400 px-6 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_0_18px_rgba(34,211,238,0.45)]"
+              >
                 Get Started
-              </button>
+              </Link>
               <button className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100">
                 Connect Wallet
               </button>
