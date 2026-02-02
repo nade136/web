@@ -1,30 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 
-const uploadFile = async (
-  supabase: ReturnType<typeof createClient>,
-  file: File,
-  pathPrefix: string
-) => {
-  const fileExt = file.name.split(".").pop() || "png";
-  const filePath = `${pathPrefix}-${Date.now()}.${fileExt}`;
-  const fileBuffer = Buffer.from(await file.arrayBuffer());
-
-  const { error } = await supabase.storage
-    .from("kyc-docs")
-    .upload(filePath, fileBuffer, {
-      contentType: file.type,
-      upsert: true,
-    });
-
-  if (error) {
-    throw new Error(error.message);
-  }
-
-  const { data } = supabase.storage.from("kyc-docs").getPublicUrl(filePath);
-  return data.publicUrl;
-};
-
 export async function POST(request: Request) {
   try {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -58,19 +34,39 @@ export async function POST(request: Request) {
       auth: { persistSession: false },
     });
 
+    const uploadFile = async (file: File, pathPrefix: string) => {
+      const fileExt = file.name.split(".").pop() || "png";
+      const filePath = `${pathPrefix}-${Date.now()}.${fileExt}`;
+      const fileBuffer = Buffer.from(await file.arrayBuffer());
+
+      const { error } = await supabase.storage
+        .from("kyc-docs")
+        .upload(filePath, fileBuffer, {
+          contentType: file.type,
+          upsert: true,
+        });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      const { data } = supabase.storage.from("kyc-docs").getPublicUrl(filePath);
+      return data.publicUrl;
+    };
+
     const docs: Record<string, string> = {};
     const frontFile = formData.get("id_front");
     const backFile = formData.get("id_back");
     const selfieFile = formData.get("selfie");
 
     if (frontFile instanceof File) {
-      docs.id_front = await uploadFile(supabase, frontFile, `${userId}-front`);
+      docs.id_front = await uploadFile(frontFile, `${userId}-front`);
     }
     if (backFile instanceof File) {
-      docs.id_back = await uploadFile(supabase, backFile, `${userId}-back`);
+      docs.id_back = await uploadFile(backFile, `${userId}-back`);
     }
     if (selfieFile instanceof File) {
-      docs.selfie = await uploadFile(supabase, selfieFile, `${userId}-selfie`);
+      docs.selfie = await uploadFile(selfieFile, `${userId}-selfie`);
     }
 
     const { error } = await supabase.from("kyc_requests").insert({
