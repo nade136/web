@@ -120,7 +120,7 @@ export default function DashboardWalletPage() {
           </CardContent>
         </Card>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+        <div className="grid gap-4 grid-cols-3 sm:grid-cols-3 lg:grid-cols-6">
           {quickActions.map((action) => {
             const content = (
               <CardContent className="flex flex-col items-center gap-3 py-6">

@@ -11,20 +11,8 @@ export default function Home() {
 
       <main className="relative overflow-hidden">
         <div className="relative mx-auto flex min-h-[70vh] max-w-4xl flex-col items-center justify-center px-6 pb-24 pt-16 text-center">
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2">
-            <div className="orb-pulse h-full w-full rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.45)_0%,rgba(37,99,235,0.25)_35%,rgba(15,23,42,0)_70%)] opacity-90" />
-          </div>
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2">
-            <div className="orb-drift h-full w-full rounded-full bg-[radial-gradient(circle,rgba(15,23,42,0)_40%,rgba(15,23,42,0.6)_70%,rgba(15,23,42,0.9)_90%)]" />
-          </div>
-          <div className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2">
-            <div
-              className="orb-drift h-full w-full rounded-full bg-[radial-gradient(rgba(56,189,248,0.45)_1px,transparent_1px)] bg-size-[14px_14px] opacity-70"
-              style={{
-                maskImage:
-                  "radial-gradient(circle at center, #000 54%, transparent 72%)",
-              }}
-            />
+          <div className="hero-orb">
+            <span className="hero-orbit" />
           </div>
 
           <h1 className="relative z-10 text-5xl font-bold leading-tight text-white sm:text-6xl md:text-7xl">

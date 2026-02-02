@@ -95,6 +95,105 @@ html {
   }
 }
 
+@keyframes heroSpin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes heroOrbit {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes heroPulse {
+  0%,
+  100% {
+    filter: blur(0px);
+    opacity: 0.85;
+  }
+  50% {
+    filter: blur(0.6px);
+    opacity: 1;
+  }
+}
+
+.hero-orb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 560px;
+  width: 560px;
+  transform: translate(-50%, -50%);
+  border-radius: 9999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.55), transparent 55%),
+    radial-gradient(circle at 70% 40%, rgba(124, 58, 237, 0.55), transparent 55%),
+    radial-gradient(circle at 50% 60%, rgba(34, 211, 238, 0.35), transparent 60%),
+    radial-gradient(circle at center, rgba(15, 23, 42, 0) 45%, rgba(15, 23, 42, 0.65) 75%);
+  opacity: 1;
+  filter: drop-shadow(0 0 40px rgba(56, 189, 248, 0.35));
+  animation: heroPulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.hero-orb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background:
+    radial-gradient(rgba(56, 189, 248, 0.55) 1px, transparent 1px);
+  background-size: 12px 12px;
+  mask-image: radial-gradient(circle at center, #000 54%, transparent 72%);
+  opacity: 0.85;
+  animation: heroSpin 16s linear infinite;
+}
+
+.hero-orb::after {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border-radius: 9999px;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow:
+    0 0 60px rgba(56, 189, 248, 0.35),
+    inset 0 0 40px rgba(124, 58, 237, 0.3);
+  opacity: 0.95;
+}
+
+.hero-orb .hero-orbit {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 100%;
+  width: 100%;
+  transform: translate(-50%, -50%);
+  animation: heroOrbit 12s linear infinite;
+}
+
+.hero-orb .hero-orbit::before {
+  content: "";
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  height: 10px;
+  width: 10px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  background: rgba(56, 189, 248, 0.95);
+  box-shadow:
+    0 0 12px rgba(56, 189, 248, 0.8),
+    0 0 24px rgba(124, 58, 237, 0.6);
+}
+
 .orb-pulse {
   animation: orbPulse 6s ease-in-out infinite;
   transform-origin: center;
