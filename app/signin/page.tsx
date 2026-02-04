@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { supabaseUser } from "@/lib/supabaseClient";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export default function SignInPage() {
   const router = useRouter();
+  const { t } = useI18n();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -40,20 +42,18 @@ export default function SignInPage() {
       <div className="mx-auto flex min-h-screen w-full max-w-6xl items-center justify-center px-6">
         <div className="w-full max-w-md rounded-3xl border border-white/10 bg-[#15192e] p-8 shadow-[0_20px_50px_rgba(4,10,22,0.6)]">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-white">Welcome Back</h1>
-            <p className="mt-2 text-sm text-slate-400">
-              Sign in to continue to your dashboard
-            </p>
+            <h1 className="text-3xl font-bold text-white">{t("auth.signin.title")}</h1>
+            <p className="mt-2 text-sm text-slate-400">{t("auth.signin.subtitle")}</p>
           </div>
 
           <form className="mt-8 space-y-4" onSubmit={handleSignIn}>
             <div>
               <label className="text-xs font-semibold text-slate-300">
-                Email address
+                {t("auth.email")}
               </label>
               <input
                 type="email"
-                placeholder="you@email.com"
+                placeholder={t("auth.email.placeholder")}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-white/10 bg-[#0f1122] px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
@@ -61,12 +61,12 @@ export default function SignInPage() {
             </div>
             <div>
               <label className="text-xs font-semibold text-slate-300">
-                Password
+                {t("auth.password")}
               </label>
               <div className="relative mt-2">
                 <input
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("auth.password.placeholder")}
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-[#0f1122] px-4 py-3 pr-14 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
@@ -76,7 +76,7 @@ export default function SignInPage() {
                   onClick={() => setShowPassword((value) => !value)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 transition hover:text-cyan-200"
                 >
-                  {showPassword ? "Hide" : "Show"}
+                  {showPassword ? t("auth.hide") : t("auth.show")}
                 </button>
               </div>
             </div>
@@ -87,13 +87,13 @@ export default function SignInPage() {
                   type="checkbox"
                   className="h-4 w-4 rounded border-white/20 bg-transparent text-cyan-300"
                 />
-                Remember me
+                {t("auth.rememberMe")}
               </label>
               <button
                 type="button"
                 className="text-cyan-300 hover:text-cyan-200"
               >
-                Forgot password?
+                {t("auth.forgotPassword")}
               </button>
             </div>
 
@@ -108,14 +108,14 @@ export default function SignInPage() {
               disabled={isLoading}
               className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-6 py-3 text-sm font-semibold text-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.35)] disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t("auth.signin.loading") : t("auth.signin.cta")}
             </button>
           </form>
 
           <p className="mt-6 text-center text-xs text-slate-400">
-            Don&apos;t have an account?{" "}
+            {t("auth.signin.noAccount")} {" "}
             <Link className="text-cyan-300 hover:text-cyan-200" href="/signup">
-              Create one
+              {t("auth.signin.createOne")}
             </Link>
           </p>
         </div>

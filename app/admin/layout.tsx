@@ -15,6 +15,7 @@ const navItems = [
   { label: "Backup Requests", href: "/admin/backup-requests" },
   { label: "Wallet Providers", href: "/admin/wallet-providers" },
   { label: "Deposit Tokens", href: "/admin/deposit-tokens" },
+  { label: "Live Chart", href: "/admin/live-chart" },
 ];
 
 export default function AdminLayout({
@@ -104,13 +105,13 @@ export default function AdminLayout({
         />
 
         <aside
-          className={`fixed left-0 top-0 z-40 flex h-full w-72 shrink-0 border-r border-slate-200/70 bg-white transition-transform duration-300 dark:border-white/10 dark:bg-[#0f1122] lg:relative lg:h-screen lg:overflow-hidden lg:transition-[width] lg:duration-300 lg:translate-x-0 ${
+          className={`fixed left-0 top-0 z-40 flex h-full w-72 shrink-0 overflow-y-auto border-r border-slate-200/70 bg-white transition-transform duration-300 dark:border-white/10 dark:bg-[#0f1122] lg:relative lg:h-screen lg:overflow-y-auto lg:transition-[width] lg:duration-300 lg:translate-x-0 ${
             sidebarOpen
               ? "translate-x-0 lg:w-72"
               : "-translate-x-full lg:w-0 lg:border-r-0"
           }`}
         >
-          <div className="flex h-full w-full flex-col px-6 py-8">
+          <div className="flex h-full w-full flex-col overflow-y-auto px-6 py-8">
             <div className="flex items-center gap-3 text-lg font-semibold text-cyan-600 dark:text-cyan-200">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-400/10">
                 <span className="text-cyan-600 dark:text-cyan-300">W</span>

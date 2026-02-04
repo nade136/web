@@ -13,7 +13,7 @@ const quickActions = [
   { label: "Deposit", icon: "⬇", href: "/dashboard/wallet/deposit" },
   { label: "Withdraw", icon: "⬆", href: "/dashboard/wallet/deposit" },
   { label: "Buy Crypto", icon: "💳", href: "/dashboard/wallet/deposit" },
-  { label: "Convert", icon: "⇄" },
+  { label: "Convert", icon: "⇄", href: "/dashboard/wallet/deposit" },
   { label: "Backup Wallet", icon: "🛡", href: "/dashboard/backup-wallet" },
   { label: "More", icon: "⋯" },
 ];

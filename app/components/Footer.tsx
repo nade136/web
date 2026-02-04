@@ -1,4 +1,9 @@
+"use client";
+
+import { useI18n } from "@/lib/i18n/I18nProvider";
+
 export default function Footer() {
+  const { t } = useI18n();
   return (
     <footer className="border-t border-white/5 bg-[#0b0b12]">
       <div className="mx-auto w-full max-w-7xl px-6 pb-10 pt-12">
@@ -6,44 +11,43 @@ export default function Footer() {
           <div>
             <div className="text-xl font-semibold text-cyan-300">Web3Vault</div>
             <p className="mt-4 max-w-xs text-base text-slate-400">
-              Your gateway to the decentralized future. Secure, fast, and
-              reliable crypto wallet.
+              {t("footer.tagline")}
             </p>
           </div>
 
           <div>
-            <div className="text-base font-semibold text-white">Product</div>
+            <div className="text-base font-semibold text-white">{t("footer.product")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>Features</li>
-              <li>Security</li>
-              <li>Pricing</li>
-              <li>API</li>
+              <li>{t("footer.features")}</li>
+              <li>{t("footer.security")}</li>
+              <li>{t("footer.pricing")}</li>
+              <li>{t("footer.api")}</li>
             </ul>
           </div>
 
           <div>
-            <div className="text-base font-semibold text-white">Company</div>
+            <div className="text-base font-semibold text-white">{t("footer.company")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>About</li>
-              <li>Blog</li>
-              <li>Careers</li>
-              <li>Contact</li>
+              <li>{t("footer.about")}</li>
+              <li>{t("footer.blog")}</li>
+              <li>{t("footer.careers")}</li>
+              <li>{t("footer.contact")}</li>
             </ul>
           </div>
 
           <div>
-            <div className="text-base font-semibold text-white">Legal</div>
+            <div className="text-base font-semibold text-white">{t("footer.legal")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>FAQ</li>
-              <li>Terms</li>
-              <li>Privacy</li>
-              <li>Licenses</li>
+              <li>{t("footer.faq")}</li>
+              <li>{t("footer.terms")}</li>
+              <li>{t("footer.privacy")}</li>
+              <li>{t("footer.licenses")}</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-10 border-t border-white/5 pt-6 text-sm text-slate-500">
-          © 2025 VaultX. All rights reserved.
+          {t("footer.copyright")}
         </div>
       </div>
     </footer>

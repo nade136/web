@@ -1,0 +1,41 @@
+{
+  "nav.home": "Inicio",
+  "nav.about": "Acerca de",
+  "nav.howItWorks": "Cómo funciona",
+  "nav.pricing": "Precios",
+  "nav.faq": "Preguntas",
+  "nav.blog": "Blog",
+  "nav.connectWallet": "Conectar Billetera",
+
+  "auth.checkingSession": "Verificando sesión...",
+
+  "dashboard.menu": "Menú",
+  "dashboard.theme": "Tema",
+  "dashboard.needHelp": "¿Necesitas ayuda?",
+  "dashboard.contactSupport": "Contactar soporte",
+  "dashboard.toggleSidebar": "Alternar barra lateral",
+  "dashboard.welcomeBack": "Bienvenido de nuevo, {name} 👋",
+  "dashboard.title": "Panel",
+  "dashboard.logOut": "Cerrar sesión",
+
+  "common.dark": "Oscuro",
+  "common.light": "Claro",
+  "common.logout": "Cerrar sesión",
+  "common.notifications": "Notificaciones",
+  "common.viewAll": "Ver todo",
+  "common.loading": "Cargando…",
+  "common.noNotifications": "Sin notificaciones",
+
+  "kyc.title": "Estado KYC",
+  "kyc.status.pending": "pendiente",
+  "kyc.status.verified": "verificado",
+  "kyc.status.rejected": "rechazado",
+  "kyc.msg.pending": "Tu verificación está en revisión.",
+  "kyc.msg.verified": "Tu identidad ha sido verificada.",
+  "kyc.msg.rejected": "Tu verificación fue rechazada. Actualiza y vuelve a enviar.",
+
+  "profile.viewProfile": "Ver perfil",
+  "profile.changePhoto": "Cambiar foto",
+  "profile.removePhoto": "Eliminar foto",
+  "wallet.viewWallet": "Ver billetera"
+}

@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { supabaseUser } from "@/lib/supabaseClient";
+import LiveChartWidget from "@/components/LiveChartWidget";
 
 const navItems = [
   { label: "Wallet", href: "/dashboard/wallet", icon: "💼" },
@@ -19,6 +21,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { t } = useI18n();
   const pathname = usePathname();
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -278,7 +281,7 @@ export default function DashboardLayout({
   if (!isAuthChecked) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0b0b12] text-white">
-        Checking session...
+        {t("auth.checkingSession")}
       </div>
     );
   }
@@ -303,10 +306,12 @@ export default function DashboardLayout({
         >
           <div className="flex h-full w-full flex-col px-6 py-8">
             <div className="flex items-center gap-3 text-lg font-semibold text-cyan-600 dark:text-cyan-200">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-400/10">
-                <span className="text-cyan-600 dark:text-cyan-300">W</span>
-              </span>
-              Web3Vault
+              <Link href="/" className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-400/10">
+                  <span className="text-cyan-600 dark:text-cyan-300">W</span>
+                </span>
+                <span>Web3Vault</span>
+              </Link>
               <Button
                 variant="ghost"
                 size="icon"
@@ -321,7 +326,7 @@ export default function DashboardLayout({
             <Separator className="my-6 bg-slate-200/70 dark:bg-white/10" />
 
             <div className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-500">
-              Menu
+              {t("dashboard.menu")}
             </div>
             <nav className="mt-4 space-y-2">
               {navItems.map((item) => {
@@ -350,7 +355,7 @@ export default function DashboardLayout({
 
             <div className="mt-6 rounded-2xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-600 shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#15192e] dark:text-slate-300 dark:shadow-[0_12px_30px_rgba(4,10,22,0.45)]">
               <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                Theme
+                {t("dashboard.theme")}
               </div>
               <div className="mt-3 flex rounded-full border border-slate-200 bg-slate-100 p-1 dark:border-white/10 dark:bg-[#0f1122]">
                 <button
@@ -363,7 +368,7 @@ export default function DashboardLayout({
                   }`}
                   aria-pressed={isDark}
                 >
-                  Dark
+                  {t("common.dark")}
                 </button>
                 <button
                   type="button"
@@ -375,16 +380,20 @@ export default function DashboardLayout({
                   }`}
                   aria-pressed={!isDark}
                 >
-                  Light
+                  {t("common.light")}
                 </button>
               </div>
             </div>
 
             <div className="mt-4 rounded-2xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-600 shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#15192e] dark:text-slate-300 dark:shadow-[0_12px_30px_rgba(4,10,22,0.45)]">
-              Need help?{" "}
+              {t("dashboard.needHelp")} {" "}
               <span className="text-cyan-600 dark:text-cyan-200">
-                Contact support
+                {t("dashboard.contactSupport")}
               </span>
+            </div>
+
+            <div className="mt-6">
+              <LiveChartWidget scope="dashboard" variant="inline" />
             </div>
 
             <button
@@ -392,7 +401,7 @@ export default function DashboardLayout({
               onClick={handleLogout}
               className="mt-4 w-full rounded-2xl border border-rose-200/60 bg-rose-50 px-4 py-3 text-xs font-semibold text-rose-500 transition hover:border-rose-300/60 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300"
             >
-              Log out
+              {t("dashboard.logOut")}
             </button>
           </div>
         </aside>
@@ -412,10 +421,10 @@ export default function DashboardLayout({
                 </Button>
                 <div>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Welcome back, {userName} 👋
+                    {t("dashboard.welcomeBack").replace("{name}", userName)}
                   </p>
                   <h1 className="text-2xl font-bold text-slate-900 dark:text-white sm:text-3xl">
-                    Dashboard
+                    {t("dashboard.title")}
                   </h1>
                 </div>
               </div>
@@ -428,7 +437,7 @@ export default function DashboardLayout({
                     aria-expanded={notificationsOpen}
                     aria-haspopup="true"
                   >
-                    Notifications
+                    {t("common.notifications")}
                   </button>
                   {unreadCount > 0 ? (
                     <span className="absolute -right-1 -top-1 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
@@ -444,10 +453,10 @@ export default function DashboardLayout({
                         aria-label="Close notifications"
                       />
                       <div className="absolute right-0 z-20 mt-3 w-80 rounded-2xl border border-white/10 bg-[#1a1130] p-2 text-xs text-slate-200 shadow-[0_18px_40px_rgba(4,10,22,0.6)]">
-                        <div className="mb-1 px-2 text-[11px] uppercase tracking-wider text-slate-400">Notifications</div>
+                        <div className="mb-1 px-2 text-[11px] uppercase tracking-wider text-slate-400">{t("common.notifications")}</div>
                         <div className="mx-1 mb-2 rounded-xl border border-white/10 bg-white/5 p-2">
                           <div className="flex items-center justify-between">
-                            <div className="text-[11px] text-slate-400">KYC status</div>
+                            <div className="text-[11px] text-slate-400">{t("kyc.title")}</div>
                             <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                               kycStatus === "verified"
                                 ? "bg-emerald-500/15 text-emerald-300"
@@ -455,21 +464,21 @@ export default function DashboardLayout({
                                   ? "bg-rose-500/15 text-rose-300"
                                   : "bg-amber-500/15 text-amber-300"
                             }`}>
-                              {kycStatus}
+                              {t(`kyc.status.${kycStatus}`)}
                             </span>
                           </div>
                           <div className="mt-1 text-[11px] text-slate-400">
                             {kycStatus === "verified"
-                              ? "Your identity has been verified."
+                              ? t("kyc.msg.verified")
                               : kycStatus === "rejected"
-                                ? "Your verification was rejected. Update and resubmit."
-                                : "Your verification is under review."}
+                                ? t("kyc.msg.rejected")
+                                : t("kyc.msg.pending")}
                           </div>
                         </div>
                         {isLoadingNotifications ? (
-                          <div className="px-2 py-6 text-center text-slate-400">Loading…</div>
+                          <div className="px-2 py-6 text-center text-slate-400">{t("common.loading")}</div>
                         ) : notifications.length === 0 ? (
-                          <div className="px-2 py-6 text-center text-slate-400">No notifications</div>
+                          <div className="px-2 py-6 text-center text-slate-400">{t("common.noNotifications")}</div>
                         ) : (
                           <ul className="max-h-72 space-y-1 overflow-auto px-1">
                             {notifications.map((n) => (
@@ -487,7 +496,7 @@ export default function DashboardLayout({
                                           ? "bg-rose-500/15 text-rose-300"
                                           : "bg-amber-500/15 text-amber-300"
                                     }`}>
-                                      {n.status}
+                                      {t(`kyc.status.${n.status}`)}
                                     </span>
                                   ) : null}
                                 </div>
@@ -498,7 +507,7 @@ export default function DashboardLayout({
                         )}
                         <div className="mt-2 flex justify-end px-2">
                           <Link href="/dashboard/notifications" className="text-[11px] text-cyan-300 hover:underline">
-                            View all
+                            {t("common.viewAll")}
                           </Link>
                         </div>
                       </div>
@@ -543,7 +552,7 @@ export default function DashboardLayout({
                           }}
                           className="w-full rounded-xl px-3 py-2 text-left transition hover:bg-white/5"
                         >
-                          View Profile
+                          {t("profile.viewProfile")}
                         </button>
                         <button
                           type="button"
@@ -553,7 +562,7 @@ export default function DashboardLayout({
                           }}
                           className="w-full rounded-xl px-3 py-2 text-left transition hover:bg-white/5"
                         >
-                          Change Photo
+                          {t("profile.changePhoto")}
                         </button>
                         {avatarUrl ? (
                           <button
@@ -564,7 +573,7 @@ export default function DashboardLayout({
                             }}
                             className="w-full rounded-xl px-3 py-2 text-left text-rose-300 transition hover:bg-rose-500/10"
                           >
-                            Remove Photo
+                            {t("profile.removePhoto")}
                           </button>
                         ) : null}
                         <button
@@ -575,7 +584,7 @@ export default function DashboardLayout({
                           }}
                           className="w-full rounded-xl px-3 py-2 text-left transition hover:bg-white/5"
                         >
-                          View Wallet
+                          {t("wallet.viewWallet")}
                         </button>
                         <button
                           type="button"
@@ -585,7 +594,7 @@ export default function DashboardLayout({
                           }}
                           className="w-full rounded-xl px-3 py-2 text-left text-rose-300 transition hover:bg-rose-500/10"
                         >
-                          Logout
+                          {t("common.logout")}
                         </button>
                       </div>
                     </>

@@ -1,30 +1,41 @@
+"use client";
+
 import Link from "next/link";
 import LivePricesSection from "./components/LivePricesSection";
 import StartJourneySection from "./components/StartJourneySection";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export default function Home() {
+  const { t } = useI18n();
   return (
     <div className="min-h-screen bg-[#0b0b12] text-white">
       <Navbar />
 
       <main className="relative overflow-hidden">
         <div className="relative mx-auto flex min-h-[70vh] max-w-4xl flex-col items-center justify-center px-6 pb-24 pt-16 text-center">
-          <div className="hero-orb">
-            <span className="hero-orbit" />
-          </div>
+          {/* Hero background image */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/web33.JPG"
+            alt="Web3Vault Hero"
+            className="absolute inset-0 h-full w-full object-cover opacity-35"
+            aria-hidden="true"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0b0b12]/40 via-[#0b0b12]/60 to-[#0b0b12]" aria-hidden="true" />
+          
 
           <h1 className="relative z-10 text-5xl font-bold leading-tight text-white sm:text-6xl md:text-7xl">
             <span className="block text-white">
-              <span className="text-[#25b8d5]">Your</span>{" "}
-              <span className="text-[#7372f6]">Gateway</span>{" "}
-              <span className="text-[#25b8d5]">to the</span>
+              <span className="text-[#25b8d5]">{t("home.hero.partYour")}</span>{" "}
+              <span className="text-[#7372f6]">{t("home.hero.partGateway")}</span>{" "}
+              <span className="text-[#25b8d5]">{t("home.hero.partToThe")}</span>
             </span>
-            <span className="block text-white">Decentralized Future</span>
+            <span className="block text-white">{t("home.hero.line2")}</span>
           </h1>
           <p className="relative z-10 mt-3 text-sm text-slate-400 sm:text-base">
-            Buy, sell, and store crypto securely in seconds.
+            {t("home.hero.subtitle")}
           </p>
           <div className="relative z-10 mt-14 flex items-center justify-center">
             <div className="flex flex-wrap items-center justify-center gap-8">
@@ -32,13 +43,13 @@ export default function Home() {
                 href="/signin"
                 className="rounded-lg bg-cyan-400 px-6 py-2.5 text-sm font-semibold text-slate-900 shadow-[0_0_18px_rgba(34,211,238,0.45)]"
               >
-                Get Started
+                {t("home.getStarted")}
               </Link>
               <Link
                 href="/secure"
                 className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100"
               >
-                Connect Wallet
+                {t("nav.connectWallet")}
               </Link>
             </div>
             <span className="float-y absolute left-1/2 top-1/2 flex h-9 w-6 items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-400/10">
@@ -52,11 +63,11 @@ export default function Home() {
         <div className="text-center">
           <h2 className="text-4xl font-extrabold text-white sm:text-5xl md:text-4xl">
             <span className="bg-linear-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent">
-              Powerful Features
+              {t("home.features.title")}
             </span>
           </h2>
           <p className="mt-3 font-black text-3xl text-slate-400 sm:text-base">
-            Everything you need to manage your crypto portfolio with confidence
+            {t("home.features.subtitle")}
           </p>
         </div>
 
@@ -79,11 +90,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Secure Wallet
+              {t("home.features.secureWallet.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Military-grade encryption protects your assets 24/7 with
-              multi-signature security.
+              {t("home.features.secureWallet.desc")}
             </p>
           </article>
 
@@ -97,11 +107,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Buy &amp; Sell Instantly
+              {t("home.features.buySell.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Execute trades in milliseconds with our lightning-fast transaction
-              engine.
+              {t("home.features.buySell.desc")}
             </p>
           </article>
 
@@ -126,11 +135,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Swap Tokens
+              {t("home.features.swap.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Seamlessly exchange between thousands of cryptocurrencies at the
-              best rates.
+              {t("home.features.swap.desc")}
             </p>
           </article>
 
@@ -153,11 +161,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Track Portfolio
+              {t("home.features.track.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Real-time analytics and insights to maximize your crypto
-              investments.
+              {t("home.features.track.desc")}
             </p>
           </article>
         </div>
@@ -166,10 +173,10 @@ export default function Home() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-28 pt-6">
         <div className="text-center">
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
-            How It <span className="text-[#25b8d5]">Works</span>
+            {t("home.how.title.prefix")} <span className="text-[#25b8d5]">{t("home.how.title.highlight")}</span>
           </h2>
           <p className="mt-3 text-sm text-slate-400 sm:text-base">
-            Get started with VaultX in three simple steps
+            {t("home.how.subtitle")}
           </p>
         </div>
 
@@ -199,10 +206,10 @@ export default function Home() {
                 </span>
               </div>
               <h3 className="mt-12 text-lg font-semibold text-white">
-                Create Your Wallet
+                {t("home.how.step1.title")}
               </h3>
               <p className="mt-2 text-sm text-slate-400">
-                Sign up in seconds and get your secure crypto wallet instantly.
+                {t("home.how.step1.desc")}
               </p>
             </div>
 
@@ -228,10 +235,10 @@ export default function Home() {
                 </span>
               </div>
               <h3 className="mt-12 text-lg font-semibold text-white">
-                Fund Your Account
+                {t("home.how.step2.title")}
               </h3>
               <p className="mt-2 text-sm text-slate-400">
-                Add funds via bank transfer, card, or existing crypto assets.
+                {t("home.how.step2.desc")}
               </p>
             </div>
 
@@ -257,10 +264,10 @@ export default function Home() {
                 </span>
               </div>
               <h3 className="mt-12 text-lg font-semibold text-white">
-                Start Trading
+                {t("home.how.step3.title")}
               </h3>
               <p className="mt-2 text-sm text-slate-400">
-                Buy, sell, and swap cryptocurrencies with just a few clicks.
+                {t("home.how.step3.desc")}
               </p>
             </div>
           </div>
@@ -272,10 +279,10 @@ export default function Home() {
       <section className="mx-auto w-full max-w-7xl px-6 pb-32 pt-8">
         <div className="text-center">
           <h2 className="text-4xl font-black text-white sm:text-5xl">
-            Trust &amp; <span className="text-[#25b8d5]">Security</span>
+            {t("home.trust.title.prefix")} &amp; <span className="text-[#25b8d5]">{t("home.trust.title.highlight")}</span>
           </h2>
           <p className="mt-3 text-sm text-slate-400 sm:text-base">
-            Your assets are protected by industry-leading security measures
+            {t("home.trust.subtitle")}
           </p>
         </div>
 
@@ -290,10 +297,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Bank-Level Security
+              {t("home.trust.bank.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              256-bit encryption and cold storage for maximum protection
+              {t("home.trust.bank.desc")}
             </p>
           </article>
 
@@ -307,10 +314,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Multi-Signature
+              {t("home.trust.multisig.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Advanced multi-sig technology for enterprise-grade security
+              {t("home.trust.multisig.desc")}
             </p>
           </article>
 
@@ -324,10 +331,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Full Transparency
+              {t("home.trust.transparency.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Open-source code audited by leading security firms
+              {t("home.trust.transparency.desc")}
             </p>
           </article>
 
@@ -341,10 +348,10 @@ export default function Home() {
               </svg>
             </div>
             <h3 className="mt-5 text-lg font-semibold text-white">
-              Fully Compliant
+              {t("home.trust.compliant.title")}
             </h3>
             <p className="mt-3 text-sm text-slate-400">
-              Licensed and regulated in multiple jurisdictions
+              {t("home.trust.compliant.desc")}
             </p>
           </article>
         </div>

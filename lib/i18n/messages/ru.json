@@ -1,0 +1,41 @@
+{
+  "nav.home": "Главная",
+  "nav.about": "О нас",
+  "nav.howItWorks": "Как это работает",
+  "nav.pricing": "Цены",
+  "nav.faq": "Вопросы",
+  "nav.blog": "Блог",
+  "nav.connectWallet": "Подключить кошелек",
+
+  "auth.checkingSession": "Проверка сессии...",
+
+  "dashboard.menu": "Меню",
+  "dashboard.theme": "Тема",
+  "dashboard.needHelp": "Нужна помощь?",
+  "dashboard.contactSupport": "Связаться с поддержкой",
+  "dashboard.toggleSidebar": "Переключить боковую панель",
+  "dashboard.welcomeBack": "С возвращением, {name} 👋",
+  "dashboard.title": "Панель",
+  "dashboard.logOut": "Выйти",
+
+  "common.dark": "Темная",
+  "common.light": "Светлая",
+  "common.logout": "Выйти",
+  "common.notifications": "Уведомления",
+  "common.viewAll": "Показать все",
+  "common.loading": "Загрузка…",
+  "common.noNotifications": "Нет уведомлений",
+
+  "kyc.title": "Статус KYC",
+  "kyc.status.pending": "в ожидании",
+  "kyc.status.verified": "проверено",
+  "kyc.status.rejected": "отклонено",
+  "kyc.msg.pending": "Ваша проверка на рассмотрении.",
+  "kyc.msg.verified": "Ваша личность подтверждена.",
+  "kyc.msg.rejected": "Проверка отклонена. Обновите данные и отправьте снова.",
+
+  "profile.viewProfile": "Просмотр профиля",
+  "profile.changePhoto": "Изменить фото",
+  "profile.removePhoto": "Удалить фото",
+  "wallet.viewWallet": "Посмотреть кошелек"
+}

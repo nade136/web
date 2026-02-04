@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
+import LiveChartWidget from "@/components/LiveChartWidget";
+import { I18nProvider } from "@/lib/i18n/I18nProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SmoothScroll>{children}</SmoothScroll>
+        <I18nProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+          <LiveChartWidget scope="public" />
+        </I18nProvider>
       </body>
     </html>
   );

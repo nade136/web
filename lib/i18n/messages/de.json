@@ -1,0 +1,41 @@
+{
+  "nav.home": "Startseite",
+  "nav.about": "Über uns",
+  "nav.howItWorks": "So funktioniert's",
+  "nav.pricing": "Preise",
+  "nav.faq": "FAQ",
+  "nav.blog": "Blog",
+  "nav.connectWallet": "Wallet verbinden",
+
+  "auth.checkingSession": "Sitzung wird geprüft...",
+
+  "dashboard.menu": "Menü",
+  "dashboard.theme": "Theme",
+  "dashboard.needHelp": "Brauchst du Hilfe?",
+  "dashboard.contactSupport": "Support kontaktieren",
+  "dashboard.toggleSidebar": "Seitenleiste umschalten",
+  "dashboard.welcomeBack": "Willkommen zurück, {name} 👋",
+  "dashboard.title": "Dashboard",
+  "dashboard.logOut": "Abmelden",
+
+  "common.dark": "Dunkel",
+  "common.light": "Hell",
+  "common.logout": "Abmelden",
+  "common.notifications": "Benachrichtigungen",
+  "common.viewAll": "Alle anzeigen",
+  "common.loading": "Laden…",
+  "common.noNotifications": "Keine Benachrichtigungen",
+
+  "kyc.title": "KYC-Status",
+  "kyc.status.pending": "ausstehend",
+  "kyc.status.verified": "verifiziert",
+  "kyc.status.rejected": "abgelehnt",
+  "kyc.msg.pending": "Deine Verifizierung wird geprüft.",
+  "kyc.msg.verified": "Deine Identität wurde verifiziert.",
+  "kyc.msg.rejected": "Deine Verifizierung wurde abgelehnt. Aktualisiere und sende erneut.",
+
+  "profile.viewProfile": "Profil anzeigen",
+  "profile.changePhoto": "Foto ändern",
+  "profile.removePhoto": "Foto entfernen",
+  "wallet.viewWallet": "Wallet anzeigen"
+}

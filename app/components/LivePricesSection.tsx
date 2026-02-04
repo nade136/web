@@ -3,6 +3,7 @@
 import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { useI18n } from "@/lib/i18n/I18nProvider";
 
 const coins = [
   { name: "Bitcoin", symbol: "BTC", price: "$42,568.42", change: "+2.34%", up: true },
@@ -21,15 +22,16 @@ const coins = [
 ];
 
 export default function LivePricesSection() {
+  const { t } = useI18n();
   return (
     <section className="mx-auto w-full max-w-7xl overflow-hidden px-6 pb-28 pt-4">
       <div className="text-center">
         <h2 className="text-3xl font-bold text-white sm:text-4xl">
-          Live <span className="text-[#25b8d5]">Crypto</span>{" "}
-          <span className="text-[#7b5cff]">Prices</span>
+          {t("live.title.prefix")} <span className="text-[#25b8d5]">{t("live.title.highlight1")}</span>{" "}
+          <span className="text-[#7b5cff]">{t("live.title.highlight2")}</span>
         </h2>
         <p className="mt-3 text-sm text-slate-400 sm:text-base">
-          Real-time market data at your fingertips
+          {t("live.subtitle")}
         </p>
       </div>
 
