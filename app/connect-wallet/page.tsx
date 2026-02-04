@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { supabaseUser } from "@/lib/supabaseClient";
 import Navbar from "../components/Navbar";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -92,7 +93,7 @@ export default function ConnectWalletPage() {
                 : wallets.map((wallet) => (
                     <div
                       key={wallet.id}
-                      className="flex items-center gap-1 rounded-2xl border border-white/10 bg-[#1a1130] px-4 py-4 text-left shadow-[0_10px_24px_rgba(5,8,20,0.5)] transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
+                      className="flex flex-col items-center gap-2 rounded-2xl border border-white/10 bg-[#1a1130] px-4 py-4 text-center shadow-[0_10px_24px_rgba(5,8,20,0.5)] transition duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(5,8,20,0.6)]"
                       role="button"
                       tabIndex={0}
                       onClick={() => {
@@ -109,7 +110,7 @@ export default function ConnectWalletPage() {
                       }}
                     >
                       <div
-                        className={`flex w-10 aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
+                        className={`flex w-12 aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full text-sm font-semibold shadow-[0_8px_16px_rgba(15,23,42,0.35)] ${
                           wallet.logo_url
                             ? "bg-transparent"
                             : "border border-white/10 bg-white text-[#2dd4f8]"
@@ -119,13 +120,13 @@ export default function ConnectWalletPage() {
                           <img
                             src={wallet.logo_url}
                             alt={wallet.name}
-                            className="h-full w-full rounded-full object-contain p-0.5"
+                            className="h-full w-full rounded-full object-contain p-1"
                           />
                         ) : (
                           getInitials(wallet.name)
                         )}
                       </div>
-                      <div className="text-sm font-semibold text-cyan-300">
+                      <div className="text-xs sm:text-sm font-semibold text-cyan-300 text-center">
                         {wallet.name}
                       </div>
                     </div>
@@ -288,17 +289,8 @@ export default function ConnectWalletPage() {
           ) : (
             <div className="relative w-full max-w-sm rounded-2xl bg-white p-8 text-center text-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
               <div className="mx-auto flex items-center justify-center gap-2 text-sm font-semibold text-slate-700">
-                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50">
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 text-cyan-600"
-                    aria-hidden="true"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M12 2 3 7v10l9 5 9-5V7l-9-5Zm0 2.2 6.8 3.8v8L12 19.8 5.2 16V8l6.8-3.8Zm0 2.2-4.6 2.6v5.4L12 17l4.6-2.6V9L12 6.4Zm0 2 2.6 1.5v3L12 14.2l-2.6-1.5v-3L12 8.4Z"
-                    />
-                  </svg>
+                <span className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+                  <Image src="/images/logo1.jpeg" alt="Web3Vault" width={20} height={20} className="h-5 w-5 rounded object-cover" />
                 </span>
                 Web3Vault
               </div>

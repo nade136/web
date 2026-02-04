@@ -15,12 +15,14 @@ export default function Home() {
 
       <main className="relative overflow-hidden">
         <div className="relative mx-auto flex min-h-[70vh] max-w-4xl flex-col items-center justify-center px-6 pb-24 pt-16 text-center">
-          {/* Hero background image */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/web33.JPG"
-            alt="Web3Vault Hero"
+          {/* Hero background video (muted, autoplay, loop) */}
+          <video
             className="absolute inset-0 h-full w-full object-cover opacity-35"
+            src="/images/video.MP4"
+            muted
+            autoPlay
+            loop
+            playsInline
             aria-hidden="true"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#0b0b12]/40 via-[#0b0b12]/60 to-[#0b0b12]" aria-hidden="true" />
@@ -46,7 +48,7 @@ export default function Home() {
                 {t("home.getStarted")}
               </Link>
               <Link
-                href="/signup"
+                href="/connect-wallet"
                 className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100"
               >
                 {t("nav.connectWallet")}

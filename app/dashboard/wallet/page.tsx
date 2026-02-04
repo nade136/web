@@ -113,7 +113,7 @@ export default function DashboardWalletPage() {
                 variant="outline"
                 className="rounded-full border-slate-200/70 text-slate-700 hover:bg-slate-100 dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/5"
               >
-                <Link href="/dashboard/backup-wallet">Connect Wallet</Link>
+                <Link href="/connect-wallet">Connect Wallet</Link>
               </Button>
             </div>
           </CardHeader>
