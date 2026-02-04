@@ -44,13 +44,13 @@ export default function AdminLayout({
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("web3-dashboard-theme");
-    const prefersDark =
-      window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? true;
-    const nextIsDark =
-      savedTheme === "dark" || (!savedTheme && prefersDark);
+    const nextIsDark = savedTheme ? savedTheme === "dark" : true;
 
     setIsDark(nextIsDark);
     document.documentElement.classList.toggle("dark", nextIsDark);
+    if (!savedTheme) {
+      localStorage.setItem("web3-dashboard-theme", "dark");
+    }
     window.dispatchEvent(
       new CustomEvent("dashboard-theme-change", {
         detail: { theme: nextIsDark ? "dark" : "light" },

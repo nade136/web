@@ -12,6 +12,7 @@ export default function DashboardOverviewPage() {
   const [changeValue, setChangeValue] = useState("+0.0%");
   const [assetsValue, setAssetsValue] = useState("0");
   const [riskLevel, setRiskLevel] = useState("Medium");
+  const [showBalance, setShowBalance] = useState(true);
 
   useEffect(() => {
     if (!chartRef.current) return;
@@ -123,11 +124,19 @@ export default function DashboardOverviewPage() {
           </CardHeader>
           <CardContent className="grid gap-6 sm:grid-cols-4">
             <div>
-              <div className="text-xs text-slate-500 dark:text-slate-400">
-                Total Balance
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-xs text-slate-500 dark:text-slate-400">Total Balance</div>
+                <button
+                  type="button"
+                  onClick={() => setShowBalance((v) => !v)}
+                  className="rounded-lg px-2 py-1 text-[10px] font-semibold text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-white/5"
+                  aria-label={showBalance ? "Hide balance" : "Show balance"}
+                >
+                  {showBalance ? "👁️" : "🙈"}
+                </button>
               </div>
               <div className="mt-2 text-2xl font-semibold text-slate-900 dark:text-white">
-                {totalBalance}
+                {showBalance ? totalBalance : "•••••"}
               </div>
             </div>
             <div>

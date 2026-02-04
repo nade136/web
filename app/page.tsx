@@ -34,9 +34,12 @@ export default function Home() {
               >
                 Get Started
               </Link>
-              <button className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100">
+              <Link
+                href="/secure"
+                className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100"
+              >
                 Connect Wallet
-              </button>
+              </Link>
             </div>
             <span className="float-y absolute left-1/2 top-1/2 flex h-9 w-6 items-center justify-center rounded-full border border-cyan-400/50 bg-cyan-400/10">
               <span className="h-3 w-1.5 rounded-full bg-cyan-200/80" />

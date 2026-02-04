@@ -11,6 +11,7 @@ export default function SignUpPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +20,12 @@ export default function SignUpPage() {
     event.preventDefault();
     setError("");
     setIsLoading(true);
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setIsLoading(false);
+      return;
+    }
 
     const { error: signUpError } = await supabaseUser.auth.signUp({
       email,
@@ -54,10 +61,12 @@ export default function SignUpPage() {
 
           <form className="mt-8 space-y-4" onSubmit={handleSignUp}>
             <div>
-              <label className="text-xs font-semibold text-slate-300">Name</label>
+              <label className="text-xs font-semibold text-slate-300">
+                Full name
+              </label>
               <input
                 type="text"
-                placeholder="Your name"
+                placeholder="Your full name"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 className="mt-2 w-full rounded-xl border border-white/10 bg-[#0f1122] px-4 py-3 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
@@ -85,6 +94,27 @@ export default function SignUpPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(event) => setPassword(event.target.value)}
+                  className="w-full rounded-xl border border-white/10 bg-[#0f1122] px-4 py-3 pr-14 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((value) => !value)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-slate-400 transition hover:text-cyan-200"
+                >
+                  {showPassword ? "Hide" : "Show"}
+                </button>
+              </div>
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-300">
+                Confirm password
+              </label>
+              <div className="relative mt-2">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
                   className="w-full rounded-xl border border-white/10 bg-[#0f1122] px-4 py-3 pr-14 text-sm text-slate-200 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
                 />
                 <button

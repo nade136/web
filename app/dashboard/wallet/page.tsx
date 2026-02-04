@@ -11,7 +11,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const quickActions = [
   { label: "Deposit", icon: "⬇", href: "/dashboard/wallet/deposit" },
-  { label: "Withdraw", icon: "⬆" },
+  { label: "Withdraw", icon: "⬆", href: "/dashboard/wallet/deposit" },
   { label: "Buy Crypto", icon: "💳", href: "/dashboard/wallet/deposit" },
   { label: "Convert", icon: "⇄" },
   { label: "Backup Wallet", icon: "🛡", href: "/dashboard/backup-wallet" },
@@ -43,6 +43,7 @@ export default function DashboardWalletPage() {
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [walletAmount, setWalletAmount] = useState("$0");
   const [walletSubtext, setWalletSubtext] = useState("~0.00000000 BTC");
+  const [showBalance, setShowBalance] = useState(true);
 
   useEffect(() => {
     const loadStats = async () => {
@@ -90,9 +91,15 @@ export default function DashboardWalletPage() {
               <CardTitle className="text-sm font-semibold">
                 Wallet Overview
               </CardTitle>
-              <span className="text-xs text-slate-500 dark:text-slate-400">
-                👁
-              </span>
+              <button
+                type="button"
+                onClick={() => setShowBalance((v) => !v)}
+                className="text-xs text-slate-500 transition hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200"
+                aria-label={showBalance ? "Hide balance" : "Show balance"}
+                title={showBalance ? "Hide balance" : "Show balance"}
+              >
+                {showBalance ? "👁️" : "🙈"}
+              </button>
             </div>
             <div className="flex items-center gap-2">
               <Button
@@ -112,10 +119,10 @@ export default function DashboardWalletPage() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold text-slate-900 dark:text-white">
-              {walletAmount}
+              {showBalance ? walletAmount : "•••••"}
             </div>
             <div className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-              {walletSubtext}
+              {showBalance ? walletSubtext : "••••••••••"}
             </div>
           </CardContent>
         </Card>

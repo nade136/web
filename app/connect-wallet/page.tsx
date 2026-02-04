@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
 import { supabaseUser } from "@/lib/supabaseClient";
 import Navbar from "../components/Navbar";
 
@@ -292,6 +293,12 @@ export default function ConnectWalletPage() {
             </div>
           ) : (
             <div className="relative w-full max-w-sm rounded-2xl bg-white p-8 text-center text-slate-800 shadow-[0_20px_50px_rgba(0,0,0,0.45)]">
+              <div className="mx-auto flex items-center justify-center gap-2 text-sm font-semibold text-slate-700">
+                <span className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-700">
+                  W
+                </span>
+                Web3Vault
+              </div>
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-900 text-white">
                 ✓
               </div>
@@ -310,12 +317,13 @@ export default function ConnectWalletPage() {
                 protected. Feel free to continue managing your wallet or explore
                 additional features.
               </p>
-              <button
-                className="mt-6 rounded-full bg-[#6d28d9] px-6 py-2 text-sm font-semibold text-white"
+              <Link
+                href="/"
+                className="mt-6 inline-flex rounded-full bg-[#6d28d9] px-6 py-2 text-sm font-semibold text-white"
                 onClick={resetModal}
               >
                 Return To Home Page
-              </button>
+              </Link>
             </div>
           )}
         </div>
