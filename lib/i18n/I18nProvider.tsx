@@ -185,7 +185,8 @@ export function LanguageSwitcher({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div className={className} data-lang-switcher>
+    <div className={`relative inline-block ${className || ""}`} data-lang-switcher>
+      {/* Desktop: labeled button */}
       <button
         type="button"
         onClick={() => setOpen(o => !o)}
@@ -197,8 +198,19 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         {locale}
         <svg viewBox="0 0 20 20" className="h-4 w-4 text-slate-200"><path fill="currentColor" d="M5.6 7.5a1 1 0 0 1 1.4 0L10 10.5l3-3a1 1 0 1 1 1.4 1.4l-3.7 3.7a1 1 0 0 1-1.4 0L5.6 8.9a1 1 0 0 1 0-1.4Z"/></svg>
       </button>
+
+      {/* Mobile: icon-only button */}
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full border border-cyan-400/40 bg-white/5 text-slate-100 backdrop-blur"
+        aria-label="Change language"
+        aria-expanded={open}
+      >
+        <svg viewBox="0 0 24 24" className="h-5 w-5 text-cyan-200"><path fill="currentColor" d="M12 2a10 10 0 0 0 0 20 10 10 0 0 0 0-20Zm7.8 9h-3.1a14 14 0 0 0-1.2-5 8 8 0 0 1 4.3 5Zm-5.3 0H9.5a12 12 0 0 1 1.3-5.3 12 12 0 0 1 1.3 5.3Zm-7.3 0H4.2a8 8 0 0 1 4.3-5 14 14 0 0 0-1.3 5Zm0 2a14 14 0 0 0 1.3 5 8 8 0 0 1-4.3-5Zm2.3 0h5a12 12 0 0 1-1.3 5.3A12 12 0 0 1 9.5 13Zm7.3 0h3.1a8 8 0 0 1-4.3 5 14 14 0 0 0 1.2-5Z"/></svg>
+      </button>
       {open ? (
-        <div className="absolute z-50 mt-2 max-h-72 w-44 overflow-auto rounded-xl border border-white/10 bg-[#1a1130] p-1 text-xs text-slate-200 shadow-[0_18px_40px_rgba(4,10,22,0.6)]">
+        <div className="absolute right-0 z-50 mt-2 max-h-72 w-44 overflow-auto rounded-xl border border-white/10 bg-[#1a1130] p-1 text-xs text-slate-200 shadow-[0_18px_40px_rgba(4,10,22,0.6)]">
           {locales.map(l => (
             <button
               key={l}

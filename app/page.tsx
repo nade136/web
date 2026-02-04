@@ -46,7 +46,7 @@ export default function Home() {
                 {t("home.getStarted")}
               </Link>
               <Link
-                href="/secure"
+                href="/signup"
                 className="rounded-lg border border-white/15 bg-transparent px-6 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:bg-[#110d1c]/60 hover:text-slate-100"
               >
                 {t("nav.connectWallet")}

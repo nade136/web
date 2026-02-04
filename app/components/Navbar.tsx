@@ -75,9 +75,10 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3 relative">
           <LanguageSwitcher />
+          {/* Desktop: labeled connect button */}
           <Link
-            href="/secure"
-            className="flex items-center gap-2 rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-5 py-2 text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30"
+            href="/signup"
+            className="hidden items-center gap-2 rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-5 py-2 text-sm font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 md:flex"
           >
             <span className="flex h-7 w-5 items-center justify-center text-slate-900">
               <svg viewBox="0 0 24 24" className="h-6 w-6">
@@ -88,6 +89,19 @@ export default function Navbar() {
               </svg>
             </span>
             {t("nav.connectWallet")}
+          </Link>
+          {/* Mobile: icon-only button to signup */}
+          <Link
+            href="/signup"
+            aria-label={t("nav.connectWallet")}
+            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full bg-linear-to-r from-cyan-400 to-violet-500 text-slate-900 shadow-lg shadow-cyan-500/30"
+          >
+            <svg viewBox="0 0 24 24" className="h-6 w-6">
+              <path
+                fill="currentColor"
+                d="M5 7a3 3 0 0 1 3-3h8a1 1 0 1 1 0 2H8a1 1 0 0 0-1 1v8c0 .6.4 1 1 1h8a1 1 0 1 1 0 2H8a3 3 0 0 1-3-3V7Zm11 1h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-2a3 3 0 0 1-3-3v-2a3 3 0 0 1 3-3Zm0 2a1 1 0 0 0-1 1v2c0 .6.4 1 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1h-2Zm1 1.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+              />
+            </svg>
           </Link>
         </div>
       </div>

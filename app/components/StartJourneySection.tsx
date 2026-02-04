@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
@@ -39,10 +40,10 @@ export default function StartJourneySection() {
         <p className="mt-5 text-base text-slate-400 sm:text-lg">
           {t("start.subtitle")}
         </p>
-        <button className="mt-8 inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-400 to-violet-500 px-10 py-4 text-base font-semibold text-white shadow-[0_0_26px_rgba(45,212,255,0.5)] sm:text-lg">
+        <Link href="/signup" className="mt-8 inline-flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-400 to-violet-500 px-10 py-4 text-base font-semibold text-white shadow-[0_0_26px_rgba(45,212,255,0.5)] sm:text-lg">
           {t("start.cta")}
           <span className="text-xl leading-none">→</span>
-        </button>
+        </Link>
 
         <div className="mt-12 grid w-full max-w-4xl grid-cols-2 gap-8 text-center sm:grid-cols-4">
           <div>
