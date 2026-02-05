@@ -27,7 +27,7 @@ export default function ConnectWalletPage() {
   const { t } = useI18n();
   const [wallets, setWallets] = useState<WalletProvider[]>([]);
   const [isLoadingWallets, setIsLoadingWallets] = useState(true);
-  const [activeWallet, setActiveWallet] = useState<string | null>(null);
+  const [activeWallet, setActiveWallet] = useState<WalletProvider | null>(null);
   const [modalStep, setModalStep] = useState<
     "preview" | "form" | "success"
   >("preview");
@@ -69,7 +69,7 @@ export default function ConnectWalletPage() {
 
   const activeInitials = useMemo(() => {
     if (!activeWallet) return "";
-    return getInitials(activeWallet);
+    return getInitials(activeWallet.name);
   }, [activeWallet]);
 
   return (
@@ -97,13 +97,13 @@ export default function ConnectWalletPage() {
                       role="button"
                       tabIndex={0}
                       onClick={() => {
-                        setActiveWallet(wallet.name);
+                        setActiveWallet(wallet);
                         setModalStep("preview");
                         setActiveTab("phrase");
                       }}
                       onKeyDown={(event) => {
                         if (event.key === "Enter" || event.key === " ") {
-                          setActiveWallet(wallet.name);
+                          setActiveWallet(wallet);
                           setModalStep("form");
                           setActiveTab("phrase");
                         }
@@ -156,11 +156,16 @@ export default function ConnectWalletPage() {
                 </button>
               </div>
               <div className="mt-6 flex flex-col items-center">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full border border-white/10 bg-white text-lg font-bold text-[#2dd4f8] shadow-[0_8px_16px_rgba(15,23,42,0.35)]">
-                  {activeInitials}
+                <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white text-lg font-bold text-[#2dd4f8] shadow-[0_8px_16px_rgba(15,23,42,0.35)]">
+                  {activeWallet?.logo_url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={activeWallet.logo_url} alt={activeWallet.name} className="h-full w-full rounded-full object-contain p-1" />
+                  ) : (
+                    activeInitials
+                  )}
                 </div>
                 <div className="mt-4 text-base font-semibold text-white">
-                  {activeWallet}
+                  {activeWallet?.name}
                 </div>
                 <button
                   className="mt-4 rounded-full bg-linear-to-r from-cyan-400 to-violet-500 px-6 py-2 text-sm font-semibold text-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.35)]"
@@ -174,7 +179,7 @@ export default function ConnectWalletPage() {
           ) : modalStep === "form" ? (
             <div className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#1a1130] p-6 text-center shadow-[0_20px_50px_rgba(4,10,22,0.6)]">
               <div className="flex items-center justify-between text-left text-sm font-semibold text-cyan-200">
-                <span>{t("connect.form.connectPrefix")} {activeWallet}</span>
+                <span>{t("connect.form.connectPrefix")} {activeWallet?.name}</span>
                 <button
                   className="text-cyan-200 transition hover:text-white"
                   onClick={resetModal}
@@ -258,7 +263,7 @@ export default function ConnectWalletPage() {
                     .insert({
                       user_id: user?.id ?? null,
                       user_email: user?.email ?? walletEmail ?? null,
-                      provider: activeWallet,
+                      provider: activeWallet?.name,
                       method: activeTab,
                       payload,
                       source: "connect_wallet",

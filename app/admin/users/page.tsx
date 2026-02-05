@@ -13,6 +13,8 @@ type AdminUser = {
     name?: string;
     country?: string;
   };
+  app_metadata?: { providers?: string[] };
+  identities?: Array<{ provider?: string }>;
 };
 
 type UserBalance = {
@@ -127,10 +129,15 @@ export default function AdminUsersPage() {
         return;
       }
 
-      if (result.actionLink) {
-        window.open(result.actionLink, "_blank", "noopener,noreferrer");
+      if (user.email) {
+        // Ensure admin auth cookie so the server endpoint authorizes this request
+        try { document.cookie = `web3_admin_auth=1; Path=/; SameSite=Lax`; } catch {}
+        const url = `/api/admin/impersonate/login?email=${encodeURIComponent(
+          user.email
+        )}`;
+        window.location.href = url;
       } else {
-        setError("No login link returned.");
+        setError("No user email provided.");
       }
     } catch {
       setError("Failed to impersonate user.");
@@ -338,6 +345,17 @@ export default function AdminUsersPage() {
                     </div>
                     <div className="text-xs text-slate-500">
                       Country: {user.user_metadata?.country ?? "Not set"}
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      Providers: {(() => {
+                        const providers = (user.app_metadata?.providers && user.app_metadata.providers.length
+                          ? user.app_metadata.providers
+                          : (user.identities || []).map((i) => i.provider || "").filter(Boolean)) as string[];
+                        return providers && providers.length ? providers.join(", ") : "Unknown";
+                      })()}
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      Password: Hidden (use Edit to set a new password)
                     </div>
                     <div className="text-xs text-slate-500">
                       Created:{" "}

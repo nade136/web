@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -113,8 +114,8 @@ export default function AdminLayout({
         >
           <div className="flex h-full w-full flex-col overflow-y-auto px-6 py-8">
             <div className="flex items-center gap-3 text-lg font-semibold text-cyan-600 dark:text-cyan-200">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-400/10">
-                <span className="text-cyan-600 dark:text-cyan-300">W</span>
+              <span className="relative h-10 w-10 overflow-hidden rounded-xl border border-cyan-400/40 bg-cyan-400/10">
+                <Image src="/images/logo1.jpeg" alt="Web3Vault" fill className="object-cover" />
               </span>
               Web3Vault
               <button

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useI18n } from "@/lib/i18n/I18nProvider";
 
 export default function Footer() {
@@ -18,30 +19,30 @@ export default function Footer() {
           <div>
             <div className="text-base font-semibold text-white">{t("footer.product")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>{t("footer.features")}</li>
-              <li>{t("footer.security")}</li>
-              <li>{t("footer.pricing")}</li>
-              <li>{t("footer.api")}</li>
+              <li><Link href="/">{t("footer.features")}</Link></li>
+              <li><Link href="/">{t("footer.security")}</Link></li>
+              <li><Link href="/">{t("footer.pricing")}</Link></li>
+              <li><Link href="/">{t("footer.api")}</Link></li>
             </ul>
           </div>
 
           <div>
             <div className="text-base font-semibold text-white">{t("footer.company")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>{t("footer.about")}</li>
-              <li>{t("footer.blog")}</li>
-              <li>{t("footer.careers")}</li>
-              <li>{t("footer.contact")}</li>
+              <li><Link href="/">{t("footer.about")}</Link></li>
+              <li><Link href="/">{t("footer.blog")}</Link></li>
+              <li><Link href="/">{t("footer.careers")}</Link></li>
+              <li><Link href="/">{t("footer.contact")}</Link></li>
             </ul>
           </div>
 
           <div>
             <div className="text-base font-semibold text-white">{t("footer.legal")}</div>
             <ul className="mt-4 space-y-3 text-base text-slate-400">
-              <li>{t("footer.faq")}</li>
-              <li>{t("footer.terms")}</li>
-              <li>{t("footer.privacy")}</li>
-              <li>{t("footer.licenses")}</li>
+              <li><Link href="/">{t("footer.faq")}</Link></li>
+              <li><Link href="/">{t("footer.terms")}</Link></li>
+              <li><Link href="/">{t("footer.privacy")}</Link></li>
+              <li><Link href="/">{t("footer.licenses")}</Link></li>
             </ul>
           </div>
         </div>

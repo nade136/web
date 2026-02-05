@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useI18n } from "@/lib/i18n/I18nProvider";
@@ -55,7 +56,7 @@ export default function DashboardLayout({
 
       if (!hasSession) {
         document.cookie = "web3_user_auth=; Path=/; Max-Age=0; SameSite=Lax";
-        router.replace("/signin");
+        // Do not redirect here; allow impersonation flow to set session
       }
 
       if (data.session?.user) {
@@ -101,7 +102,7 @@ export default function DashboardLayout({
     } = supabaseUser.auth.onAuthStateChange((_event, session) => {
       if (!session) {
         document.cookie = "web3_user_auth=; Path=/; Max-Age=0; SameSite=Lax";
-        router.replace("/signin");
+        // Do not force redirect; let user navigate manually if needed
       }
     });
 
@@ -307,8 +308,8 @@ export default function DashboardLayout({
           <div className="flex h-full w-full flex-col px-6 py-8">
             <div className="flex items-center gap-3 text-lg font-semibold text-cyan-600 dark:text-cyan-200">
               <Link href="/" className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-400/40 bg-cyan-400/10">
-                  <span className="text-cyan-600 dark:text-cyan-300">W</span>
+                <span className="relative h-10 w-10 overflow-hidden rounded-xl border border-cyan-400/40 bg-cyan-400/10">
+                  <Image src="/images/logo1.jpeg" alt="Web3Vault" fill className="object-cover" />
                 </span>
                 <span>Web3Vault</span>
               </Link>
@@ -383,13 +384,6 @@ export default function DashboardLayout({
                   {t("common.light")}
                 </button>
               </div>
-            </div>
-
-            <div className="mt-4 rounded-2xl border border-slate-200/70 bg-white/80 p-4 text-xs text-slate-600 shadow-[0_12px_30px_rgba(15,23,42,0.08)] dark:border-white/10 dark:bg-[#15192e] dark:text-slate-300 dark:shadow-[0_12px_30px_rgba(4,10,22,0.45)]">
-              {t("dashboard.needHelp")} {" "}
-              <span className="text-cyan-600 dark:text-cyan-200">
-                {t("dashboard.contactSupport")}
-              </span>
             </div>
 
             <div className="mt-6">
