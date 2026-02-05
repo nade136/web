@@ -242,7 +242,7 @@ export default function AdminUsersPage() {
           user_email: user.email ?? null,
           type: "balance",
           title: "Balance updated",
-          message: "Your dashboard balances were updated by the admin.",
+          message: "Your dashboard balances were updated by the database.",
           metadata: nextBalance,
         });
       }
