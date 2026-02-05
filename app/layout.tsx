@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "./components/SmoothScroll";
 import LiveChartWidget from "@/components/LiveChartWidget";
+import SmartsuppChat from "@/app/components/SmartsuppChat";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 
 const geistSans = Geist({
@@ -81,6 +82,7 @@ export default function RootLayout({
         <I18nProvider>
           <SmoothScroll>{children}</SmoothScroll>
           <LiveChartWidget scope="public" />
+          <SmartsuppChat />
         </I18nProvider>
       </body>
     </html>
