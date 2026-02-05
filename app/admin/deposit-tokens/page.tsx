@@ -40,20 +40,20 @@ export default function AdminDepositTokensPage() {
   const [editIsActive, setEditIsActive] = useState(true);
 
   const loadTokens = async () => {
-    const { data, error: loadError } = await supabaseAdmin
-      .from("deposit_tokens")
-      .select("id,name,symbol,price,networks,addresses,is_active,sort_order")
-      .order("sort_order", { ascending: true })
-      .order("name", { ascending: true });
-
-    if (loadError) {
-      setError(loadError.message);
+    try {
+      const res = await fetch("/api/admin/deposit-tokens", { cache: "no-store" });
+      const json = await res.json();
+      if (!res.ok) {
+        setError(json?.error || "Failed to load tokens.");
+        setIsLoading(false);
+        return;
+      }
+      setTokens(json.tokens ?? []);
       setIsLoading(false);
-      return;
+    } catch (e) {
+      setError("Failed to load tokens.");
+      setIsLoading(false);
     }
-
-    setTokens(data ?? []);
-    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -101,25 +101,33 @@ export default function AdminDepositTokensPage() {
 
     const networkList = parseNetworks(networks);
 
-    const { error: insertError } = await supabaseAdmin
-      .from("deposit_tokens")
-      .insert({
-        name: name.trim(),
-        symbol: symbol.trim().toUpperCase(),
-        price: price.trim() || "$0.00",
-        networks: networkList,
-        addresses: addressMap,
-        is_active: isActive,
-        sort_order: sortOrder,
+    try {
+      const res = await fetch("/api/admin/deposit-tokens", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          symbol: symbol.trim().toUpperCase(),
+          price: price.trim() || "$0.00",
+          networks: networkList,
+          addresses: addressMap,
+          is_active: isActive,
+          sort_order: sortOrder,
+        }),
       });
-
-    setIsSaving(false);
-
-    if (insertError) {
-      setError(insertError.message);
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setError(json?.error || "Failed to add token.");
+        setIsSaving(false);
+        return;
+      }
+    } catch (e) {
+      setError("Failed to add token.");
+      setIsSaving(false);
       return;
     }
 
+    setIsSaving(false);
     setName("");
     setSymbol("");
     setPrice("$0.00");
