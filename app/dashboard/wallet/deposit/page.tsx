@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 import { supabaseUser } from "@/lib/supabaseClient";
 
@@ -24,12 +24,26 @@ export default function DepositPage() {
   const [isLoadingTokens, setIsLoadingTokens] = useState(true);
   const [selectedSymbol, setSelectedSymbol] = useState("");
   const [showTokenList, setShowTokenList] = useState(true);
+  const [query, setQuery] = useState("");
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const selectedToken = useMemo(
     () => tokens.find((token) => token.symbol === selectedSymbol),
-    [selectedSymbol]
+    [selectedSymbol, tokens]
   );
   const availableNetworks = selectedToken?.networks ?? [];
+
+  const visibleTokens = useMemo(() => {
+    const q = query.trim().toLowerCase();
+    if (!q) return tokens;
+    return tokens.filter((t) =>
+      t.name.toLowerCase().includes(q) || t.symbol.toLowerCase().includes(q)
+    );
+  }, [tokens, query]);
+
+  useEffect(() => {
+    setVisibleCount(10);
+  }, [tokens, query]);
 
   useEffect(() => {
     const loadTokens = async () => {
@@ -92,34 +106,56 @@ export default function DepositPage() {
             >
               Back
             </Badge>
-            <div className="flex-1 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-500 dark:border-white/10 dark:bg-[#0f1118] dark:text-slate-400">
-              Search tokens (name or symbol)...
-            </div>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search tokens (name or symbol)..."
+              className="flex-1 rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-300/40 dark:border-white/10 dark:bg-[#0f1118] dark:text-slate-200"
+            />
           </div>
         </CardHeader>
         <CardContent>
           <div className="grid gap-6 lg:grid-cols-[1.35fr_0.65fr]">
             <div className="max-h-[420px] space-y-3 overflow-y-auto pr-2">
               {showTokenList ? (
-                isLoadingTokens ? null : tokens.map((token) => (
-                  <button
-                    type="button"
-                    key={token.id}
-                    onClick={() => {
-                      setSelectedSymbol(token.symbol);
-                      setShowTokenList(false);
-                    }}
-                    className="flex w-full items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-left text-sm text-slate-700 transition hover:border-cyan-300/50 dark:border-white/5 dark:bg-[#14172b] dark:text-slate-200 dark:hover:border-cyan-400/30"
-                  >
-                    <div>
-                      <div className="font-semibold">{token.name}</div>
-                      <div className="text-xs text-slate-500 dark:text-slate-400">
-                        {token.symbol}
-                      </div>
-                    </div>
-                    <div className="text-sm">{token.price}</div>
-                  </button>
-                ))
+                isLoadingTokens
+                  ? null
+                  : (
+                    <>
+                      {visibleTokens
+                        .slice(0, Math.min(visibleCount, 15))
+                        .map((token) => (
+                          <button
+                            type="button"
+                            key={token.id}
+                            onClick={() => {
+                              setSelectedSymbol(token.symbol);
+                              setShowTokenList(false);
+                            }}
+                            className="flex w-full items-center justify-between rounded-2xl border border-slate-200/70 bg-slate-50 px-4 py-3 text-left text-sm text-slate-700 transition hover:border-cyan-300/50 dark:border-white/5 dark:bg-[#14172b] dark:text-slate-200 dark:hover:border-cyan-400/30"
+                          >
+                            <div>
+                              <div className="font-semibold">{token.name}</div>
+                              <div className="text-xs text-slate-500 dark:text-slate-400">
+                                {token.symbol}
+                              </div>
+                            </div>
+                            <div className="text-sm">{token.price}</div>
+                          </button>
+                        ))}
+                      {visibleTokens.length > Math.min(visibleCount, 15) ? (
+                        <div className="pt-2">
+                          <button
+                            type="button"
+                            onClick={() => setVisibleCount((c) => Math.min(c + 5, 15))}
+                            className="w-full rounded-full border border-slate-200/70 bg-white px-3 py-2 text-xs font-semibold text-slate-600 transition hover:border-cyan-300/60 dark:border-white/10 dark:bg-[#0f1118] dark:text-slate-300 dark:hover:border-cyan-400/40"
+                          >
+                            Show 5 more (max 15)
+                          </button>
+                        </div>
+                      ) : null}
+                    </>
+                  )
               ) : selectedToken ? (
                 <div className="rounded-3xl border border-slate-200/70 bg-slate-50 p-4 text-slate-700 dark:border-white/10 dark:bg-[#14172b] dark:text-slate-200">
                   <div className="flex items-center justify-between">
